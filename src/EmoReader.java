@@ -33,6 +33,8 @@ public class EmoReader implements Runnable {
 			return;
 		}
 		logger.readerInfo("Connected to EmoComposer on [" + emotivIp + "]");
+		
+		// TODO: calibrate gyro?
 
 		while (true) {
 			int state = Edk.INSTANCE.EE_EngineGetNextEvent(eEvent);
@@ -67,7 +69,6 @@ public class EmoReader implements Runnable {
 
 		Edk.INSTANCE.EE_EngineDisconnect();
 		logger.readerInfo("Disconnected!");
-		// TODO: log severe error
 		System.exit(1);
 	}
 
@@ -92,7 +93,7 @@ public class EmoReader implements Runnable {
 
 		boolean winkLeft = false;
 		boolean winkRight = false;
-		int expressiveAction = EmoState.INSTANCE.ES_CognitivGetCurrentAction(eState);
+		int expressiveAction = EmoState.INSTANCE.ES_ExpressivGetLowerFaceAction(eState);
 		if (expressiveAction == EmoState.EE_ExpressivAlgo_t.EXP_SMIRK_LEFT.ToInt()) {
 			winkLeft = true;
 		} else if (expressiveAction == EmoState.EE_ExpressivAlgo_t.EXP_SMIRK_RIGHT.ToInt()) {
