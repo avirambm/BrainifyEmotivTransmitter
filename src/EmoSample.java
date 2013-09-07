@@ -4,34 +4,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class EmoSample {
 
 	@JsonProperty("local_time")
-	long localTime;
+	private long localTime;
 
 	@JsonProperty("connection_strength")
-	float connectionStrength;
+	private float connectionStrength;
 
 	@JsonIgnore
-	int wirelessSignalStatus;
+	private int wirelessSignalStatus;
 	@JsonIgnore
-	int[] contactQuality;
+	private int[] contactQuality;
 
 	@JsonProperty("meditation")
-	float meditation;
+	private float meditation;
 	@JsonProperty("engagement")
-	float engagement;
+	private float engagement;
 	@JsonProperty("happiness")
-	float happiness;
+	private float happiness;
 	@JsonProperty("excitement")
-	float excitement;
+	private float excitement;
 
 	@JsonProperty("wink_left")
-	boolean winkLeft;
+	private boolean winkLeft;
 	@JsonProperty("wink_right")
-	boolean winkRight;
+	private boolean winkRight;
 
 	@JsonProperty("turn_x")
-	int turnX;
+	private int turnX;
 	@JsonProperty("turn_y")
-	int turnY;
+	private int turnY;
 
 	public EmoSample(long localTime, int wirelessSignalStatus, int[] contactQuality, float meditation,
 			float engagement, float happiness, float excitement, boolean winkLeft, boolean winkRight, int turnX,

@@ -18,6 +18,8 @@ public class EmoTrans implements Runnable {
 	private BlockingQueue<EmoSample> samplesQueue;
 	private String userId;
 
+	private EmoLogger logger = EmoLogger.getInstance();
+
 	public EmoTrans(int samplesToSend, String serverAddress, BlockingQueue<EmoSample> samplesQueue, String userId) {
 		this.samplesToSend = samplesToSend;
 		this.serverAddress = serverAddress;
@@ -27,11 +29,11 @@ public class EmoTrans implements Runnable {
 
 	@Override
 	public void run() {
-		// catching exceptions which are not supposed to happen
+		// catch exceptions which are not supposed to happen for cleaner code
 		try {
 			run2();
 		} catch (IllegalStateException | InterruptedException | IOException e) {
-			// TODO: log severe error
+			logger.transError(e.getMessage());
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -49,14 +51,15 @@ public class EmoTrans implements Runnable {
 			}
 			EmoSamplesPost emoPost = new EmoSamplesPost(userId, emoSamples);
 
-			// convert to json and sent
+			// convert to json and send
 			HttpPost post = new HttpPost(serverAddress);
 			post.setEntity(new StringEntity(mapper.writeValueAsString(emoPost)));
 			HttpResponse response = null;
 			try {
-				// TODO: log sending
+				logger.transInfo("Posting " + samplesToSend + " samples to " + serverAddress);
 				response = new DefaultHttpClient().execute(post);
 			} catch (IOException e) {
+				logger.transError(e.getMessage());
 				e.printStackTrace();
 				// continue
 			}
@@ -64,21 +67,22 @@ public class EmoTrans implements Runnable {
 			// log the response
 			if (response != null) {
 				BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-				int statusLine = response.getStatusLine().getStatusCode();
-				if (statusLine == 200) {
-					// TODO: log success
-				} else {					
+				int statusCode = response.getStatusLine().getStatusCode();
+				if (statusCode == 200) {
+					logger.transInfo(samplesToSend + " samples sent successfully");
+				} else {
 					StringBuilder responseContent = new StringBuilder();
 					String line = "";
 					while ((line = rd.readLine()) != null) {
 						responseContent.append(line);
 					}
-					// TODO: log error
+					logger.transError("Failed to send samples. StatusCode: " + statusCode + "\n" + "Response: "
+							+ responseContent.toString());
 				}
 			}
 
 		}
 
 	}
-	
+
 }

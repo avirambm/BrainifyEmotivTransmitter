@@ -5,10 +5,12 @@ import com.sun.jna.ptr.IntByReference;
 
 public class EmoReader implements Runnable {
 
-	String emotivIp;
-	short emotivPort;
-	BlockingQueue<EmoSample> samplesQueue;
-	int emotivUserId;
+	private String emotivIp;
+	private short emotivPort;
+	private BlockingQueue<EmoSample> samplesQueue;
+	private int emotivUserId;
+	
+	private EmoLogger logger = EmoLogger.getInstance();
 
 	public EmoReader(String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
 		this.emotivIp = emotivIp;
@@ -23,14 +25,14 @@ public class EmoReader implements Runnable {
 		Pointer eState = Edk.INSTANCE.EE_EmoStateCreate();
 		IntByReference userID = new IntByReference(emotivUserId);
 
-		System.out.println("Target IP of Emotiv: [" + emotivIp + "]");
+		logger.readerInfo("Target IP of Emotiv: [" + emotivIp + "]");
 
 		if (Edk.INSTANCE.EE_EngineRemoteConnect(emotivIp, emotivPort, "Emotiv Systems-5") != EdkErrorCode.EDK_OK
 				.ToInt()) {
-			System.out.println("Cannot connect to EmoComposer on [" + emotivIp + "]");
+			logger.readerError("Cannot connect to EmoComposer on [" + emotivIp + "]");
 			return;
 		}
-		System.out.println("Connected to EmoComposer on [" + emotivIp + "]");
+		logger.readerInfo("Connected to EmoComposer on [" + emotivIp + "]");
 
 		while (true) {
 			int state = Edk.INSTANCE.EE_EngineGetNextEvent(eEvent);
@@ -46,22 +48,25 @@ public class EmoReader implements Runnable {
 
 					Edk.INSTANCE.EE_EmoEngineEventGetEmoState(eEvent, eState);
 
+					EmoSample emoSample = readSample(eState);
+					logger.readerSample(emoSample);
 					try {
-						samplesQueue.put(readSample(eState));
+						samplesQueue.put(emoSample);
 					} catch (InterruptedException e) {
+						logger.readerError(e.getMessage());
 						e.printStackTrace();
 						// continue
 					}
 				}
 
 			} else if (state != EdkErrorCode.EDK_NO_EVENT.ToInt()) {
-				System.out.println("Internal error in Emotiv Engine!");
+				logger.readerError("Internal error in Emotiv Engine!");
 				break;
 			}
 		}
 
 		Edk.INSTANCE.EE_EngineDisconnect();
-		System.out.println("Disconnected!");
+		logger.readerInfo("Disconnected!");
 		// TODO: log severe error
 		System.exit(1);
 	}
