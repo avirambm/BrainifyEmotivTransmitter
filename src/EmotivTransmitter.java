@@ -28,7 +28,7 @@ public class EmotivTransmitter {
 		BlockingQueue<EmoSample> samplesQueue = new ArrayBlockingQueue<>(BUFFER_SIZE);
 		
 		EmoReader emoReader = new EmoReader(EMOTIV_IP, EMOTIV_PORT, samplesQueue);
-		EmoTrans emoTrans = new EmoTrans(SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue);
+		EmoTrans emoTrans = new EmoTrans(SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue, SPOTIFY_USER_ID);
 		
 		new Thread(emoReader).start();
 		new Thread(emoTrans).start();
