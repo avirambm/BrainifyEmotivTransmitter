@@ -8,7 +8,7 @@ public class EmoSample {
 
 	@JsonProperty("connection_strength")
 	float connectionStrength;
-	
+
 	@JsonIgnore
 	int wirelessSignalStatus;
 	@JsonIgnore
@@ -68,7 +68,16 @@ public class EmoSample {
 	 * @return the connectionStrength
 	 */
 	public float getConnectionStrength() {
-		return connectionStrength;
+		float wirelessSignalStatus = getWirelessSignalStatus() / EmoState.EE_SignalStrength_t.values().length;
+
+		int[] contactQualities = getContactQuality();
+		float contactQuality = 0;
+		for (int i = 0; i < contactQualities.length; i++) {
+			contactQuality += contactQualities[i];
+		}
+		contactQuality /= contactQualities.length * EmoState.EE_EEG_ContactQuality_t.values().length;
+
+		return Math.min(wirelessSignalStatus, contactQuality);
 	}
 
 	/**
@@ -87,7 +96,8 @@ public class EmoSample {
 	}
 
 	/**
-	 * @param wirelessSignalStatus the wirelessSignalStatus to set
+	 * @param wirelessSignalStatus
+	 *            the wirelessSignalStatus to set
 	 */
 	public void setWirelessSignalStatus(int wirelessSignalStatus) {
 		this.wirelessSignalStatus = wirelessSignalStatus;
@@ -101,7 +111,8 @@ public class EmoSample {
 	}
 
 	/**
-	 * @param contactQuality the contactQuality to set
+	 * @param contactQuality
+	 *            the contactQuality to set
 	 */
 	public void setContactQuality(int[] contactQuality) {
 		this.contactQuality = contactQuality;
