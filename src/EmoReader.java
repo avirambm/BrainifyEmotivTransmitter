@@ -29,10 +29,10 @@ public class EmoReader implements Runnable {
 
 		if (Edk.INSTANCE.EE_EngineRemoteConnect(emotivIp, emotivPort, "Emotiv Systems-5") != EdkErrorCode.EDK_OK
 				.ToInt()) {
-			logger.readerError("Cannot connect to EmoComposer on [" + emotivIp + "]");
+			logger.readerError("Cannot connect to Emotiv on [" + emotivIp + "]");
 			return;
 		}
-		logger.readerInfo("Connected to EmoComposer on [" + emotivIp + "]");
+		logger.readerInfo("Connected to Emotiv on [" + emotivIp + "]");
 		
 		// TODO: calibrate gyro?
 
