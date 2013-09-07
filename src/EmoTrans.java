@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -54,9 +55,10 @@ public class EmoTrans implements Runnable {
 			// convert to json and send
 			HttpPost post = new HttpPost(serverAddress);
 			post.setEntity(new StringEntity(mapper.writeValueAsString(emoPost)));
+			post.setHeader(HTTP.CONTENT_TYPE, "application/json");
 			HttpResponse response = null;
 			try {
-				logger.transInfo("Posting " + samplesToSend + " samples to " + serverAddress);
+				logger.transInfo("Posting " + samplesToSend + " samples to " + serverAddress + "   bufferSize=" + samplesQueue.size());
 				response = new DefaultHttpClient().execute(post);
 			} catch (IOException e) {
 				logger.transError(e.getMessage());
