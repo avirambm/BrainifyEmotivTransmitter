@@ -1,12 +1,18 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EmoSample {
 
 	@JsonProperty("local_time")
-	int localTime;
+	long localTime;
 
 	@JsonProperty("connection_strength")
 	float connectionStrength;
+	
+	@JsonIgnore
+	int wirelessSignalStatus;
+	@JsonIgnore
+	int[] contactQuality;
 
 	@JsonProperty("meditation")
 	float meditation;
@@ -27,10 +33,26 @@ public class EmoSample {
 	@JsonProperty("turn_y")
 	int turnY;
 
+	public EmoSample(long localTime, int wirelessSignalStatus, int[] contactQuality, float meditation,
+			float engagement, float happiness, float excitement, boolean winkLeft, boolean winkRight, int turnX,
+			int turnY) {
+		this.localTime = localTime;
+		this.wirelessSignalStatus = wirelessSignalStatus;
+		this.contactQuality = contactQuality;
+		this.meditation = meditation;
+		this.engagement = engagement;
+		this.happiness = happiness;
+		this.excitement = excitement;
+		this.winkLeft = winkLeft;
+		this.winkRight = winkRight;
+		this.turnX = turnX;
+		this.turnY = turnY;
+	}
+
 	/**
 	 * @return the localTime
 	 */
-	public int getLocalTime() {
+	public long getLocalTime() {
 		return localTime;
 	}
 
@@ -38,7 +60,7 @@ public class EmoSample {
 	 * @param localTime
 	 *            the localTime to set
 	 */
-	public void setLocalTime(int localTime) {
+	public void setLocalTime(long localTime) {
 		this.localTime = localTime;
 	}
 
@@ -55,6 +77,34 @@ public class EmoSample {
 	 */
 	public void setConnectionStrength(float connectionStrength) {
 		this.connectionStrength = connectionStrength;
+	}
+
+	/**
+	 * @return the wirelessSignalStatus
+	 */
+	public int getWirelessSignalStatus() {
+		return wirelessSignalStatus;
+	}
+
+	/**
+	 * @param wirelessSignalStatus the wirelessSignalStatus to set
+	 */
+	public void setWirelessSignalStatus(int wirelessSignalStatus) {
+		this.wirelessSignalStatus = wirelessSignalStatus;
+	}
+
+	/**
+	 * @return the contactQuality
+	 */
+	public int[] getContactQuality() {
+		return contactQuality;
+	}
+
+	/**
+	 * @param contactQuality the contactQuality to set
+	 */
+	public void setContactQuality(int[] contactQuality) {
+		this.contactQuality = contactQuality;
 	}
 
 	/**

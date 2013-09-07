@@ -7,6 +7,7 @@ public class EmotivTransmitter {
 	public static final String USAGE = "USAGE: BUFFER_SIZE SAMPLES_TO_SEND EMOTIV_IP EMOTIV_PORT SERVER_ADDRESS";
 	
 	public static final String SPOTIFY_USER_ID = "0";
+	public static final int EMOTIV_USER_ID = 0;
 	
 	public static int BUFFER_SIZE;
 	public static int SAMPLES_TO_SEND;
@@ -27,7 +28,7 @@ public class EmotivTransmitter {
 		
 		BlockingQueue<EmoSample> samplesQueue = new ArrayBlockingQueue<>(BUFFER_SIZE);
 		
-		EmoReader emoReader = new EmoReader(EMOTIV_IP, EMOTIV_PORT, samplesQueue);
+		EmoReader emoReader = new EmoReader(EMOTIV_IP, EMOTIV_PORT, samplesQueue, EMOTIV_USER_ID);
 		EmoTrans emoTrans = new EmoTrans(SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue, SPOTIFY_USER_ID);
 		
 		new Thread(emoReader).start();
