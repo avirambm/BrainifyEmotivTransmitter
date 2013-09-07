@@ -68,14 +68,14 @@ public class EmoSample {
 	 * @return the connectionStrength
 	 */
 	public float getConnectionStrength() {
-		float wirelessSignalStatus = getWirelessSignalStatus() / EmoState.EE_SignalStrength_t.values().length;
+		float wirelessSignalStatus = (float) getWirelessSignalStatus() / (EmoState.EE_SignalStrength_t.values().length - 1);
 
 		int[] contactQualities = getContactQuality();
 		float contactQuality = 0;
 		for (int i = 0; i < contactQualities.length; i++) {
 			contactQuality += contactQualities[i];
 		}
-		contactQuality /= contactQualities.length * EmoState.EE_EEG_ContactQuality_t.values().length;
+		contactQuality /= contactQualities.length * (EmoState.EE_EEG_ContactQuality_t.values().length - 1);
 
 		return Math.min(wirelessSignalStatus, contactQuality);
 	}

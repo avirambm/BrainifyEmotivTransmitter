@@ -6,7 +6,7 @@ public class EmotivTransmitter {
 	
 	public static final String USAGE = "Usage: BUFFER_SIZE SAMPLES_TO_SEND EMOTIV_IP EMOTIV_PORT SERVER_ADDRESS";
 	
-	public static final String SPOTIFY_USER_ID = "0";
+	public static final int SPOTIFY_USER_ID = 0;
 	public static final int EMOTIV_USER_ID = 0;
 	
 	public static int BUFFER_SIZE;

@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class EmoSamplesPost {
 
 	@JsonProperty("user_id")
-	private String userId;
+	private int userId;
 	@JsonProperty("samples")
 	private ArrayList<EmoSample> samples;
 	
 	public EmoSamplesPost() {
 	}
 	
-	public EmoSamplesPost(String userId, ArrayList<EmoSample> samples) {
+	public EmoSamplesPost(int userId, ArrayList<EmoSample> samples) {
 		this.userId = userId;
 		this.samples = samples;
 	}
@@ -21,14 +21,14 @@ public class EmoSamplesPost {
 	/**
 	 * @return the userId
 	 */
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
