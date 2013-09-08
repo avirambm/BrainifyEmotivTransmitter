@@ -30,7 +30,7 @@ public class EmoLogger {
 	}
 
 	public void readerSample(EmoSample emoSample) {
-		out(String
+		ui.displaySample(String
 				.format("Sample: time=%10d connection=%.2f meditation=%.2f engagement=%.2f happiness=%.2f excitement=%.2f winkLeft=%-5b winkRight=%-5b turnX=%-5d turnY=%-5d",
 						emoSample.getLocalTime(), emoSample.getConnectionStrength(), emoSample.getMeditation(),
 						emoSample.getEngagement(), emoSample.getHappiness(), emoSample.getExcitement(),
@@ -46,11 +46,11 @@ public class EmoLogger {
 	}
 
 	public void outFormat(String messageType, String className, String message) {
-		out(String.format("%-5s %-9s %s", messageType, className, message));
+		ui.displayMessage(String.format("%d  %-5s %-9s %s", System.currentTimeMillis(), messageType, className, message));
 	}
 
-	private void out(String message) {
-		ui.displayInfo(message);
-	}
+//	private void out(String message) {
+//		ui.displayMessage(message);
+//	}
 
 }

@@ -15,7 +15,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private JTextArea displayArea;
+	private JTextArea samplesArea;
+	private JTextArea messagesArea;
 //	private JTextField typingArea;
 	
 	public static final String newline = System.getProperty("line.separator");
@@ -70,14 +71,23 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 
 		JButton button = new JButton("Clear");
 		button.addActionListener(this);
+		
+		samplesArea = new JTextArea();
+		samplesArea.setEditable(false);
+		samplesArea.addKeyListener(this);
 
-		displayArea = new JTextArea();
-		displayArea.setEditable(false);
-		displayArea.addKeyListener(this);
-		JScrollPane scrollPane = new JScrollPane(displayArea);
-		scrollPane.setPreferredSize(new Dimension(800, 600));
+		messagesArea = new JTextArea();
+		messagesArea.setEditable(false);
+		messagesArea.addKeyListener(this);
+		
+		JScrollPane scrollPaneSamples = new JScrollPane(samplesArea);
+		scrollPaneSamples.setPreferredSize(new Dimension(1000, 400));
+		
+		JScrollPane scrollPaneMessages = new JScrollPane(messagesArea);
+		scrollPaneMessages.setPreferredSize(new Dimension(1000, 200));
 
-		getContentPane().add(scrollPane, BorderLayout.CENTER);
+		getContentPane().add(scrollPaneSamples, BorderLayout.PAGE_START);
+		getContentPane().add(scrollPaneMessages, BorderLayout.CENTER);
 		getContentPane().add(button, BorderLayout.PAGE_END);
 	}
 
@@ -90,7 +100,7 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 	/** Handle the button click. */
 	public void actionPerformed(ActionEvent e) {
 		// Clear the text components.
-		displayArea.setText("");
+		messagesArea.setText("");
 
 		// Return the focus to the typing area.
 //		typingArea.requestFocusInWindow();
@@ -102,9 +112,14 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 	 * them in a String, the characters afterward won't show up in the text
 	 * area.)
 	 */
-	void displayInfo(String keyStatus) {
-		displayArea.append(keyStatus + newline);
-		displayArea.setCaretPosition(displayArea.getDocument().getLength());
+	void displayMessage(String message) {
+		messagesArea.append(message + newline);
+		messagesArea.setCaretPosition(messagesArea.getDocument().getLength());
+	}
+	
+	void displaySample(String message) {
+		samplesArea.append(message + newline);
+		samplesArea.setCaretPosition(samplesArea.getDocument().getLength());
 	}
 
 	@Override
