@@ -10,18 +10,19 @@ public class EmoReader implements Runnable {
 	private BlockingQueue<EmoSample> samplesQueue;
 	private int emotivUserId;
 
-	private EmoLogger logger = EmoLogger.getInstance();
+	private EmoLogger logger;
 
 	private float excitementOffset = 0;
 	private float happinessOffset = 0;
 	private float engagementOffset = 0;
 	private float meditationOffset = 0;
 
-	public EmoReader(String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
+	public EmoReader(EmoLogger logger, String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
 		this.emotivIp = emotivIp;
 		this.emotivPort = emotivPort;
 		this.samplesQueue = samplesQueue;
 		this.emotivUserId = emotivUserId;
+		this.logger = logger;
 	}
 
 	@Override

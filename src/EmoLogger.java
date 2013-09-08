@@ -1,18 +1,18 @@
 public class EmoLogger {
 
-	private static EmoLogger instance = null;
-
-	private EmoLogger() {
-		// exists only to defeat instantiation.
+	private KeyEventDemo ui;
+	
+	public EmoLogger() {
 	}
-
-	public static EmoLogger getInstance() {
-		if (instance == null) {
-			instance = new EmoLogger();
-		}
-		return instance;
+	
+	public EmoLogger(KeyEventDemo ui) {
+		this.ui = ui;
 	}
-
+	
+	public void setUi(KeyEventDemo ui) {
+		this.ui = ui;
+	}
+	
 	public void transInfo(String message) {
 		info(EmoTrans.class.getName(), message);
 	}
@@ -50,7 +50,7 @@ public class EmoLogger {
 	}
 
 	private void out(String message) {
-		System.out.println(message);
+		ui.displayInfo(message);
 	}
 
 }

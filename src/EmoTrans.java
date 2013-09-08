@@ -19,13 +19,14 @@ public class EmoTrans implements Runnable {
 	private BlockingQueue<EmoSample> samplesQueue;
 	private int userId;
 
-	private EmoLogger logger = EmoLogger.getInstance();
+	private EmoLogger logger;
 
-	public EmoTrans(int samplesToSend, String serverAddress, BlockingQueue<EmoSample> samplesQueue, int userId) {
+	public EmoTrans(EmoLogger logger, int samplesToSend, String serverAddress, BlockingQueue<EmoSample> samplesQueue, int userId) {
 		this.samplesToSend = samplesToSend;
 		this.serverAddress = serverAddress;
 		this.samplesQueue = samplesQueue;
 		this.userId = userId;
+		this.logger = logger;
 	}
 
 	@Override

@@ -30,15 +30,20 @@ public class EmotivTransmitter {
 		EMOTIV_PORT = Short.parseShort(args[3]);
 		SERVER_ADDRESS = args[4];
 
+		EmoLogger logger = new EmoLogger();
+		
 		BlockingQueue<EmoSample> samplesQueue = new ArrayBlockingQueue<>(BUFFER_SIZE);
-
-		emoReader = new EmoReader(EMOTIV_IP, EMOTIV_PORT, samplesQueue, EMOTIV_USER_ID);
-		emoTrans = new EmoTrans(SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue, SPOTIFY_USER_ID);
-
+		
+		emoReader = new EmoReader(logger, EMOTIV_IP, EMOTIV_PORT, samplesQueue, EMOTIV_USER_ID);
+		emoTrans = new EmoTrans(logger, SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue, SPOTIFY_USER_ID);
+		
+		KeyEventDemo ui = new KeyEventDemo("some_name", emoReader, emoTrans);
+		logger.setUi(ui);
+		
+		new Thread(ui).start();
+		
 		new Thread(emoReader).start();
 		new Thread(emoTrans).start();
-		
-		new Thread(new KeyEventDemo("some_name", emoReader, emoTrans)).start();
 	}
 
 }
