@@ -1,7 +1,3 @@
-/*
- * KeyEventDemo
- */
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,26 +9,25 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class KeyEventDemo extends JFrame implements KeyListener, ActionListener, Runnable {
+public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, Runnable {
 	private static final long serialVersionUID = 1L;
 
-	JTextArea displayArea;
-	JTextField typingArea;
-	static final String newline = System.getProperty("line.separator");
+	private JTextArea displayArea;
+//	private JTextField typingArea;
+	
+	public static final String newline = System.getProperty("line.separator");
 
 	private EmoReader emoReader;
-//	private EmoTrans emoTrans;
+
+	// private EmoTrans emoTrans;
 
 	@Override
 	public void run() {
 		/* Use an appropriate Look and Feel */
 		try {
-			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (UnsupportedLookAndFeelException ex) {
 			ex.printStackTrace();
@@ -76,41 +71,29 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 		JButton button = new JButton("Clear");
 		button.addActionListener(this);
 
-		typingArea = new JTextField(0);
-		typingArea.addKeyListener(this);
-
-		// Uncomment this if you wish to turn off focus
-		// traversal. The focus subsystem consumes
-		// focus traversal keys, such as Tab and Shift Tab.
-		// If you uncomment the following line of code, this
-		// disables focus traversal and the Tab events will
-		// become available to the key event listener.
-		typingArea.setFocusTraversalKeysEnabled(false);
-
 		displayArea = new JTextArea();
 		displayArea.setEditable(false);
+		displayArea.addKeyListener(this);
 		JScrollPane scrollPane = new JScrollPane(displayArea);
-		scrollPane.setPreferredSize(new Dimension(375, 125));
+		scrollPane.setPreferredSize(new Dimension(800, 600));
 
-		getContentPane().add(typingArea, BorderLayout.PAGE_START);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		getContentPane().add(button, BorderLayout.PAGE_END);
 	}
 
-	public KeyEventDemo(String name, EmoReader emoReader, EmoTrans emoTrans) {
+	public EmoLoggerUI(String name, EmoReader emoReader, EmoTrans emoTrans) {
 		super(name);
 		this.emoReader = emoReader;
-//		this.emoTrans = emoTrans;
+		// this.emoTrans = emoTrans;
 	}
 
 	/** Handle the button click. */
 	public void actionPerformed(ActionEvent e) {
 		// Clear the text components.
 		displayArea.setText("");
-		typingArea.setText("");
 
 		// Return the focus to the typing area.
-		typingArea.requestFocusInWindow();
+//		typingArea.requestFocusInWindow();
 	}
 
 	/*
@@ -123,17 +106,16 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 		displayArea.append(keyStatus + newline);
 		displayArea.setCaretPosition(displayArea.getDocument().getLength());
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 
+	// for debugging
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyChar()) {
 		case 'r':
-			// energy, happiness, focus, calm
 			emoReader.setExcitementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'f':
@@ -176,7 +158,6 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 }

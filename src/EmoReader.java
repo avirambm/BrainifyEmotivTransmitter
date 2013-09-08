@@ -12,13 +12,15 @@ public class EmoReader implements Runnable {
 
 	private EmoLogger logger;
 
+	// used for debugging
 	private float excitementOffset = 0;
 	private float happinessOffset = 0;
 	private float engagementOffset = 0;
 	private float meditationOffset = 0;
 	private int gyroOffset = 0;
 
-	public EmoReader(EmoLogger logger, String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
+	public EmoReader(EmoLogger logger, String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue,
+			int emotivUserId) {
 		this.emotivIp = emotivIp;
 		this.emotivPort = emotivPort;
 		this.samplesQueue = samplesQueue;
@@ -37,11 +39,9 @@ public class EmoReader implements Runnable {
 		if (Edk.INSTANCE.EE_EngineRemoteConnect(emotivIp, emotivPort, "Emotiv Systems-5") != EdkErrorCode.EDK_OK
 				.ToInt()) {
 			logger.readerError("Cannot connect to Emotiv on [" + emotivIp + "]");
-			System.exit(1);
+			return;
 		}
 		logger.readerInfo("Connected to Emotiv on [" + emotivIp + "]");
-
-		// TODO: calibrate gyro?
 
 		while (true) {
 			int state = Edk.INSTANCE.EE_EngineGetNextEvent(eEvent);
@@ -76,7 +76,6 @@ public class EmoReader implements Runnable {
 
 		Edk.INSTANCE.EE_EngineDisconnect();
 		logger.readerInfo("Disconnected!");
-		System.exit(1);
 	}
 
 	private EmoSample readSample(Pointer eState) {
@@ -111,15 +110,14 @@ public class EmoReader implements Runnable {
 		IntByReference turnY = new IntByReference(0);
 		Edk.INSTANCE.EE_HeadsetGetGyroDelta(emotivUserId, turnX, turnY);
 
+		// for debugging
 		meditation = meditation + meditationOffset;
 		engagement = engagement + engagementOffset;
 		happiness = happiness + happinessOffset;
 		excitement = excitement + excitementOffset;
 		turnX.setValue(turnX.getValue() + gyroOffset);
 		turnY.setValue(turnY.getValue() + gyroOffset);
-		
 		gyroOffset = 0;
-		
 		meditation = boundValue(meditation);
 		engagement = boundValue(engagement);
 		happiness = boundValue(happiness);
@@ -131,7 +129,7 @@ public class EmoReader implements Runnable {
 
 	/**
 	 * @param cognitive
-	 * @return
+	 * @return the param bounded between 0 to 1
 	 */
 	private float boundValue(float cognitive) {
 		if (cognitive > 1 || cognitive < 0) {
