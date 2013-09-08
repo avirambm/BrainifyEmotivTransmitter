@@ -16,6 +16,7 @@ public class EmoReader implements Runnable {
 	private float happinessOffset = 0;
 	private float engagementOffset = 0;
 	private float meditationOffset = 0;
+	private int gyroOffset = 0;
 
 	public EmoReader(EmoLogger logger, String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
 		this.emotivIp = emotivIp;
@@ -114,6 +115,10 @@ public class EmoReader implements Runnable {
 		engagement = engagement + engagementOffset;
 		happiness = happiness + happinessOffset;
 		excitement = excitement + excitementOffset;
+		turnX.setValue(turnX.getValue() + gyroOffset);
+		turnY.setValue(turnY.getValue() + gyroOffset);
+		
+		gyroOffset = 0;
 		
 		meditation = boundValue(meditation);
 		engagement = boundValue(engagement);
@@ -153,6 +158,10 @@ public class EmoReader implements Runnable {
 
 	public void setMeditationOffset(float onclickChange) {
 		meditationOffset += onclickChange;
+	}
+
+	public void setGyroOffset(float onclickChangeVolume) {
+		gyroOffset += onclickChangeVolume;
 	}
 
 }

@@ -76,7 +76,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 		JButton button = new JButton("Clear");
 		button.addActionListener(this);
 
-		typingArea = new JTextField(20);
+		typingArea = new JTextField(0);
 		typingArea.addKeyListener(this);
 
 		// Uncomment this if you wish to turn off focus
@@ -85,7 +85,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 		// If you uncomment the following line of code, this
 		// disables focus traversal and the Tab events will
 		// become available to the key event listener.
-		// typingArea.setFocusTraversalKeysEnabled(false);
+		typingArea.setFocusTraversalKeysEnabled(false);
 
 		displayArea = new JTextArea();
 		displayArea.setEditable(false);
@@ -134,28 +134,28 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 		switch (e.getKeyChar()) {
 		case 'r':
 			// energy, happiness, focus, calm
-			emoReader.setExcitementOffset(EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setExcitementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'f':
-			emoReader.setExcitementOffset(-EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setExcitementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 't':
-			emoReader.setHappinessOffset(EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setHappinessOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'g':
-			emoReader.setHappinessOffset(-EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setHappinessOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'y':
-			emoReader.setEngagementOffset(EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setEngagementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'h':
-			emoReader.setEngagementOffset(-EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setEngagementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'u':
-			emoReader.setMeditationOffset(EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setMeditationOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case 'j':
-			emoReader.setMeditationOffset(-EmotivTransmitter.ONCLICK_CHANGE);
+			emoReader.setMeditationOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
 			break;
 		case '0':
 			// reset
@@ -163,6 +163,13 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 			emoReader.setHappinessOffset(0);
 			emoReader.setEngagementOffset(0);
 			emoReader.setMeditationOffset(0);
+			emoReader.setGyroOffset(0);
+			break;
+		case 'q':
+			emoReader.setGyroOffset(EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
+			break;
+		case 'a':
+			emoReader.setGyroOffset(-EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
 			break;
 		}
 	}
