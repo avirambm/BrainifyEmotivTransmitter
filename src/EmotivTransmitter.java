@@ -38,7 +38,7 @@ public class EmotivTransmitter {
 		emoReader = new EmoReader(logger, EMOTIV_IP, EMOTIV_PORT, samplesQueue, EMOTIV_USER_ID);
 		emoTrans = new EmoTrans(logger, SAMPLES_TO_SEND, SERVER_ADDRESS, samplesQueue, SPOTIFY_USER_ID);
 		
-		KeyEventDemo ui = new KeyEventDemo("some_name", emoReader, emoTrans);
+		KeyEventDemo ui = new KeyEventDemo("BrainifyEmotivTransmitter", emoReader, emoTrans);
 		logger.setUi(ui);
 		
 		new Thread(ui).start();

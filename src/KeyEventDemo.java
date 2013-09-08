@@ -25,7 +25,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 	static final String newline = System.getProperty("line.separator");
 
 	private EmoReader emoReader;
-	private EmoTrans emoTrans;
+//	private EmoTrans emoTrans;
 
 	@Override
 	public void run() {
@@ -100,7 +100,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener,
 	public KeyEventDemo(String name, EmoReader emoReader, EmoTrans emoTrans) {
 		super(name);
 		this.emoReader = emoReader;
-		this.emoTrans = emoTrans;
+//		this.emoTrans = emoTrans;
 	}
 
 	/** Handle the button click. */
