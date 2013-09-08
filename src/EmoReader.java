@@ -9,8 +9,13 @@ public class EmoReader implements Runnable {
 	private short emotivPort;
 	private BlockingQueue<EmoSample> samplesQueue;
 	private int emotivUserId;
-	
+
 	private EmoLogger logger = EmoLogger.getInstance();
+
+	private float excitementOffset = 0;
+	private float happinessOffset = 0;
+	private float engagementOffset = 0;
+	private float meditationOffset = 0;
 
 	public EmoReader(String emotivIp, short emotivPort, BlockingQueue<EmoSample> samplesQueue, int emotivUserId) {
 		this.emotivIp = emotivIp;
@@ -33,7 +38,7 @@ public class EmoReader implements Runnable {
 			System.exit(1);
 		}
 		logger.readerInfo("Connected to Emotiv on [" + emotivIp + "]");
-		
+
 		// TODO: calibrate gyro?
 
 		while (true) {
@@ -104,8 +109,49 @@ public class EmoReader implements Runnable {
 		IntByReference turnY = new IntByReference(0);
 		Edk.INSTANCE.EE_HeadsetGetGyroDelta(emotivUserId, turnX, turnY);
 
+		meditation = meditation + meditationOffset;
+		engagement = engagement + engagementOffset;
+		happiness = happiness + happinessOffset;
+		excitement = excitement + excitementOffset;
+		
+		meditation = boundValue(meditation);
+		engagement = boundValue(engagement);
+		happiness = boundValue(happiness);
+		excitement = boundValue(excitement);
+
 		return new EmoSample(localTime, wirelessSignalStatus, contactQuality, meditation, engagement, happiness,
 				excitement, winkLeft, winkRight, turnX.getValue(), turnY.getValue());
+	}
+
+	/**
+	 * @param cognitive
+	 * @return
+	 */
+	private float boundValue(float cognitive) {
+		if (cognitive > 1 || cognitive < 0) {
+			if (cognitive > 1) {
+				cognitive = 1;
+			} else {
+				cognitive = 0;
+			}
+		}
+		return cognitive;
+	}
+
+	public void setExcitementOffset(float onclickChange) {
+		excitementOffset += onclickChange;
+	}
+
+	public void setHappinessOffset(float onclickChange) {
+		happinessOffset += onclickChange;
+	}
+
+	public void setEngagementOffset(float onclickChange) {
+		engagementOffset += onclickChange;
+	}
+
+	public void setMeditationOffset(float onclickChange) {
+		meditationOffset += onclickChange;
 	}
 
 }
