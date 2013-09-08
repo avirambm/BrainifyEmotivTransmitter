@@ -20,9 +20,9 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 	
 	public static final String newline = System.getProperty("line.separator");
 
-	private EmoReader emoReader;
+//	private EmoReader emoReader;
 
-	// private EmoTrans emoTrans;
+//	private EmoTrans emoTrans;
 
 	@Override
 	public void run() {
@@ -83,8 +83,8 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 
 	public EmoLoggerUI(String name, EmoReader emoReader, EmoTrans emoTrans) {
 		super(name);
-		this.emoReader = emoReader;
-		// this.emoTrans = emoTrans;
+//		this.emoReader = emoReader;
+//		this.emoTrans = emoTrans;
 	}
 
 	/** Handle the button click. */
@@ -114,46 +114,46 @@ public class EmoLoggerUI extends JFrame implements KeyListener, ActionListener, 
 	// for debugging
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyChar()) {
-		case 'r':
-			emoReader.setExcitementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'f':
-			emoReader.setExcitementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 't':
-			emoReader.setHappinessOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'g':
-			emoReader.setHappinessOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'y':
-			emoReader.setEngagementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'h':
-			emoReader.setEngagementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'u':
-			emoReader.setMeditationOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case 'j':
-			emoReader.setMeditationOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
-			break;
-		case '0':
-			// reset
-			emoReader.setExcitementOffset(0);
-			emoReader.setHappinessOffset(0);
-			emoReader.setEngagementOffset(0);
-			emoReader.setMeditationOffset(0);
-			emoReader.setGyroOffset(0);
-			break;
-		case 'q':
-			emoReader.setGyroOffset(EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
-			break;
-		case 'a':
-			emoReader.setGyroOffset(-EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
-			break;
-		}
+//		switch (e.getKeyChar()) {
+//		case 'r':
+//			emoReader.setExcitementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'f':
+//			emoReader.setExcitementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 't':
+//			emoReader.setHappinessOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'g':
+//			emoReader.setHappinessOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'y':
+//			emoReader.setEngagementOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'h':
+//			emoReader.setEngagementOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'u':
+//			emoReader.setMeditationOffset(EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case 'j':
+//			emoReader.setMeditationOffset(-EmotivTransmitter.ONCLICK_CHANGE_COGNITIVE);
+//			break;
+//		case '0':
+//			// reset
+//			emoReader.setExcitementOffset(0);
+//			emoReader.setHappinessOffset(0);
+//			emoReader.setEngagementOffset(0);
+//			emoReader.setMeditationOffset(0);
+//			emoReader.setGyroOffset(0);
+//			break;
+//		case 'q':
+//			emoReader.setGyroOffset(EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
+//			break;
+//		case 'a':
+//			emoReader.setGyroOffset(-EmotivTransmitter.ONCLICK_CHANGE_VOLUME);
+//			break;
+//		}
 	}
 
 	@Override

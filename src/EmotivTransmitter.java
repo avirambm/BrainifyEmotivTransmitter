@@ -17,8 +17,8 @@ public class EmotivTransmitter {
 	public static EmoReader emoReader;
 	public static EmoTrans emoTrans;
 	
-	public static final float ONCLICK_CHANGE_COGNITIVE = 0.01f;
-	public static final float ONCLICK_CHANGE_VOLUME = 6000;
+//	public static final float ONCLICK_CHANGE_COGNITIVE = 0.01f;
+//	public static final float ONCLICK_CHANGE_VOLUME = 6000;
 
 	public static void main(String[] args) {
 		if (args.length != 5) {
